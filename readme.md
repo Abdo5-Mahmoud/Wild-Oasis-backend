@@ -235,20 +235,50 @@ Access API at `http://localhost:4000`.
 
 ```
 src/
-  app.js
-  index.js
   config/
-  models/
-    Guest.js
-    Booking.js
-  controllers/
-  routes/
-  middlewares/
-  services/
+    .env.dev
+  DB/
+    models/
+      booking.models.js
+      cabin.models.js
+      setting.models.js
+      user.models.js
+    connectDb.js
+    db.service.js
+  middleware/
+    authentication.middleware.js
+    validation.middleware.js
+  modules/
+    auth/
+      services/
+        login.service.js
+        regestration.service.js
+      auth.controller.js
+      auth.validation.js
+    booking/
+      services/
+        booking.service.js
+      booking.controller.js
+      booking.validation.js
+    cabin/
+      services/
+        cabins.service.js
+      cabins.controller.js
+      cabins.validation.js
+    guest/
+      services/
+        guest.service.js
+      guest.controller.js
+      guest.validation.js
   utils/
-  validators/
-tests/
-.env.example
+    email
+    events
+    multer
+    res
+    security
+  app.controller.js
+index.js
+
 ```
 
 ---
