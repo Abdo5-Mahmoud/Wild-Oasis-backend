@@ -14,7 +14,7 @@ export const verifyToken = ({ token = "", signature = "" }) => {
   return decoded;
 };
 
-export const decodeToken = async ({ authorization = "", next }) => {
+export const decodeToken = async ({ authorization = "", next, tokenType }) => {
   //
   try {
     if (!authorization || !authorization.startsWith("Barear ")) {
@@ -24,7 +24,10 @@ export const decodeToken = async ({ authorization = "", next }) => {
 
     const decoded = verifyToken({
       token,
-      signature: process.env.USER_ACCESS_TOKEN,
+      signature:
+        tokenType == "access"
+          ? process.env.USER_ACCESS_TOKEN
+          : process.env.USER_REFRESH_TOKEN,
     });
     // console.log(decoded);
 

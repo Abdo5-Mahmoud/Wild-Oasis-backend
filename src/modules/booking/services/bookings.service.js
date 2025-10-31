@@ -22,14 +22,24 @@ export const getAll = asynHandler(async (req, res, next) => {
 export const getUserBooking = asynHandler(async (req, res, next) => {
   const { bookingId } = req.params;
   const user = req.user;
+  try {
+    const booking = await dbServices.findOne({
+      model: BookingModel,
+      filter: { _id: bookingId, isDeleted: { $ne: true } },
+    });
+    if (!booking)
+      return next(new Error("There is no booking ", { cause: 404 }));
 
-  const booking = await dbServices.findOne({
-    model: bookingId,
-    filter: { _id: bookingId, isDeleted: { $ne: true } },
-  });
-  if (user._id != booking.userId)
-    return next(new Error("You are not authorized", { cause: 401 }));
-  return successRes({ res, data: booking, message: "Done" });
+    if (user._id != booking.userId)
+      return next(new Error("You are not authorized", { cause: 401 }));
+    return successRes({ res, data: booking, message: "Done" });
+  } catch (err) {
+    return next(
+      new Error("There's an error in the getUserBooking function", {
+        cause: 400,
+      })
+    );
+  }
 });
 
 export const createBooking = asynHandler(async (req, res, next) => {

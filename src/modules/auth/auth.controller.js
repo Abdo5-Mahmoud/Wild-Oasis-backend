@@ -2,8 +2,8 @@ import { Router } from "express";
 import * as regestrationServ from "./services/regestration.service.js";
 import { validationMiddleware } from "../../middleware/validation.middleware.js";
 import { authValidation } from "./auth.validation.js";
-import { login } from "./services/login.service.js";
-
+import { login, refreshAccessToken } from "./services/login.service.js";
+import { authenticationMiddleware } from "../../middleware/authentication.middleware.js";
 export const authRouter = Router();
 
 authRouter.post(
@@ -24,3 +24,8 @@ authRouter.patch(
 );
 
 authRouter.post("/login", validationMiddleware(authValidation.login), login);
+authRouter.post(
+  "/refreshAccessToken",
+  authenticationMiddleware(["admin", "user"], "refresh"),
+  refreshAccessToken
+);

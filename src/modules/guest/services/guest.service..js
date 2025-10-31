@@ -13,7 +13,7 @@ export const getGuests = asynHandler(async (req, res, next) => {
       options: { sort: { startDate: -1 } },
     },
   });
-
+  if (!guest) return next(new Error("Guest not found", { cause: 404 }));
   return successRes({
     res,
     message: "Done",

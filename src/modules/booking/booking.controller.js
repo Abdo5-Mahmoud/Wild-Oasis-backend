@@ -5,6 +5,7 @@ import {
   createBooking,
   deleteBookingById,
   getAll,
+  getUserBooking,
   updateBookingById,
 } from "./services/bookings.service.js";
 import { bookingValidation } from "./booking.validation.js";
@@ -18,10 +19,10 @@ bookingsRouter.get(
   getAll
 );
 bookingsRouter.get(
-  "/user/:bookingId",
+  "/user/:cabinId",
   authenticationMiddleware(["admin"]),
   validationMiddleware(bookingValidation.getUserBooking),
-  getAll
+  getUserBooking
 );
 bookingsRouter.post(
   "/createBooking",
